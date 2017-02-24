@@ -1,0 +1,6 @@
+name "time"
+description "A simple time implementation in dlang."
+authors "Christian Köstlin"
+copyright "Copyright © 2017, Christian Köstlin"
+license "MIT"
+dependency "consoled" version="~>1.0.4"
