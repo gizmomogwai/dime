@@ -1,0 +1,4 @@
+* Dime
+A tiny time implementation in dlang.
+
+Visualizes the exit code of the timed program in color and forwards the exit code.
