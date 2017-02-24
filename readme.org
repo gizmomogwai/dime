@@ -2,3 +2,5 @@
 A tiny time implementation in dlang.
 
 Visualizes the exit code of the timed program in color and forwards the exit code.
+
+Thanks [[https://github.com/flxo/duration][flxo]] for the inspiration.
