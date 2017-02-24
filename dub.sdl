@@ -1,4 +1,4 @@
-name "time"
+name "dime"
 description "A simple time implementation in dlang."
 authors "Christian Köstlin"
 copyright "Copyright © 2017, Christian Köstlin"
