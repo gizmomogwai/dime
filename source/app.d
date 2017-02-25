@@ -1,12 +1,6 @@
-import consoled;
-import std.algorithm.iteration;
-import std.datetime;
-import std.array;
-import std.process;
-import std.range;
-import std.stdio;
-
 public struct Unit {
+  import std.algorithm.iteration;
+  import std.range;
 
   public struct Scale {
     string name;
@@ -31,6 +25,8 @@ public struct Unit {
   }
 
   public Part[] transform(long v) immutable {
+    import std.array;
+
     auto res = appender!(Part[]);
     auto tmp = v;
     foreach (Scale scale; scales) {
@@ -43,6 +39,7 @@ public struct Unit {
 }
 
 Unit.Part[] onlyRelevant(Unit.Part[] parts) {
+  import std.array;
   auto res = appender!(Unit.Part[]);
   bool needed = false;
   foreach (part; parts) {
@@ -93,6 +90,12 @@ unittest {
 
 
 int main(string[] args) {
+  import consoled;
+  import std.array;
+  import std.datetime;
+  import std.process;
+  import std.algorithm.iteration;
+
   if (args.length < 2) {
     return 1;
   }
