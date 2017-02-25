@@ -36,12 +36,30 @@ public struct Unit {
     foreach (Scale scale; scales) {
       auto h = tmp / scale.factor;
       tmp = v % scale.factor;
-      if (h != 0) {
-        res.put(Part(scale.name, h));
-      }
+      res.put(Part(scale.name, h));
     }
     return res.data;
   }
+}
+
+Unit.Part[] onlyRelevant(Unit.Part[] parts) {
+  auto res = appender!(Unit.Part[]);
+  bool needed = false;
+  foreach (part; parts) {
+    if (needed || (part.v > 0)) {
+      needed = true;
+    }
+    if (needed) {
+      res.put(part);
+    }
+  }
+  return res.data;
+}
+
+Unit.Part[] mostSignificant(Unit.Part[] parts, long nr) {
+  import std.algorithm.comparison;
+  auto max = min(parts.length, nr);
+  return parts[0..max];
 }
 
 unittest {
@@ -49,31 +67,28 @@ unittest {
 
   auto res = time.transform(1 + 2*1000 + 3*1000*60 + 4*1000*60*60 + 5 * 1000*60*60*24);
   assert(res.length == 5);
-
   assert(res[0].name == "d");
   assert(res[0].v == 5);
-
   assert(res[1].name == "h");
   assert(res[1].v == 4);
-
   assert(res[2].name == "m");
   assert(res[2].v == 3);
-
   assert(res[3].name == "s");
   assert(res[3].v == 2);
-
   assert(res[4].name == "ms");
   assert(res[4].v == 1);
 
-
-  res = time.transform(2001);
+  res = time.transform(2001).onlyRelevant;
   assert(res.length == 2);
-
   assert(res[0].name == "s");
   assert(res[0].v == 2);
-
   assert(res[1].name == "ms");
   assert(res[1].v == 1);
+
+  res = time.transform(2001).onlyRelevant.mostSignificant(1);
+  assert(res.length == 1);
+  assert(res[0].name == "s");
+  assert(res[0].v == 2);
 }
 
 
@@ -98,6 +113,10 @@ int main(string[] args) {
   TickDuration duration = sw.peek();
   auto d = duration.to!("msecs", long);
 
-  writecln(exitCode == 0 ? Fg.green : Fg.red, childCommand, Fg.initial, " took ", time.transform(d).map!((a) => a.toString).join(" "));
+  writecln(exitCode == 0 ? Fg.green : Fg.red, childCommand, Fg.initial, " took ", time
+           .transform(d)
+           .onlyRelevant
+           .map!((a) => a.toString)
+           .join(" "));
   return exitCode;
 }
