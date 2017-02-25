@@ -30,7 +30,7 @@ public struct Unit {
     this.scales = cumulativeFold!((result,x) => Scale(x.name, result.factor * x.factor))(scales).array.retro.array;
   }
 
-  public Part[] transform(long v) {
+  public Part[] transform(long v) immutable {
     auto res = appender!(Part[]);
     auto tmp = v;
     foreach (Scale scale; scales) {
@@ -45,7 +45,7 @@ public struct Unit {
 }
 
 unittest {
-  Unit time = Unit("time", [Unit.Scale("ms", 1), Unit.Scale("s", 1000), Unit.Scale("m", 60), Unit.Scale("h", 60), Unit.Scale("d", 24)]);
+  static immutable time = Unit("time", [Unit.Scale("ms", 1), Unit.Scale("s", 1000), Unit.Scale("m", 60), Unit.Scale("h", 60), Unit.Scale("d", 24)]);
 
   auto res = time.transform(1 + 2*1000 + 3*1000*60 + 4*1000*60*60 + 5 * 1000*60*60*24);
   assert(res.length == 5);
@@ -82,11 +82,13 @@ int main(string[] args) {
     return 1;
   }
 
-  Unit time = Unit("time", [
-                     Unit.Scale("ms", 1),
-                     Unit.Scale("s", 1000),
-                     Unit.Scale("m", 60),
-                     Unit.Scale("h", 60)]);
+  static immutable time =
+    Unit("time", [
+           Unit.Scale("ms", 1),
+           Unit.Scale("s", 1000),
+           Unit.Scale("m", 60),
+           Unit.Scale("h", 60)
+         ]);
 
   auto childCommand = args[1..$];
   auto cmd = escapeShellCommand(childCommand);
