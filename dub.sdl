@@ -3,7 +3,7 @@ description "A simple time implementation in dlang."
 authors "Christian Köstlin"
 copyright "Copyright © 2017, Christian Köstlin"
 license "MIT"
-dependency "consoled" version="~>1.0.4"
+dependency "consoled" version="==1.0.4"
 dependency "unit-threaded" version="==0.7.4"
 configuration "unittest" {
   targetType "executable"
