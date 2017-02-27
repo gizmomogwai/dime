@@ -1,3 +1,5 @@
+version(unittest) { import unit_threaded; }
+
 public struct Unit {
   import std.algorithm.iteration;
   import std.range;
@@ -63,63 +65,65 @@ unittest {
   static immutable time = Unit("time", [Unit.Scale("ms", 1), Unit.Scale("s", 1000), Unit.Scale("m", 60), Unit.Scale("h", 60), Unit.Scale("d", 24)]);
 
   auto res = time.transform(1 + 2*1000 + 3*1000*60 + 4*1000*60*60 + 5 * 1000*60*60*24);
-  assert(res.length == 5);
-  assert(res[0].name == "d");
-  assert(res[0].v == 5);
-  assert(res[1].name == "h");
-  assert(res[1].v == 4);
-  assert(res[2].name == "m");
-  assert(res[2].v == 3);
-  assert(res[3].name == "s");
-  assert(res[3].v == 2);
-  assert(res[4].name == "ms");
-  assert(res[4].v == 1);
+  res.length.shouldEqual(5);
+  res[0].name.shouldEqual("d");
+  res[0].v.shouldEqual(5);
+  res[1].name.shouldEqual("h");
+  res[1].v.shouldEqual(4);
+  res[2].name.shouldEqual("m");
+  res[2].v.shouldEqual(3);
+  res[3].name.shouldEqual("s");
+  res[3].v.shouldEqual(2);
+  res[4].name.shouldEqual("ms");
+  res[4].v.shouldEqual(1);
 
   res = time.transform(2001).onlyRelevant;
-  assert(res.length == 2);
-  assert(res[0].name == "s");
-  assert(res[0].v == 2);
-  assert(res[1].name == "ms");
-  assert(res[1].v == 1);
+  res.length.shouldEqual(2);
+  res[0].name.shouldEqual("s");
+  res[0].v.shouldEqual(2);
+  res[1].name.shouldEqual("ms");
+  res[1].v.shouldEqual(1);
 
   res = time.transform(2001).onlyRelevant.mostSignificant(1);
-  assert(res.length == 1);
-  assert(res[0].name == "s");
-  assert(res[0].v == 2);
+  res.length.shouldEqual(1);
+  res[0].name.shouldEqual("s");
+  res[0].v.shouldEqual(2);
 }
 
+version (unittest) {
+} else {
+  int main(string[] args) {
+    import consoled;
+    import std.array;
+    import std.datetime;
+    import std.process;
+    import std.algorithm.iteration;
 
-int main(string[] args) {
-  import consoled;
-  import std.array;
-  import std.datetime;
-  import std.process;
-  import std.algorithm.iteration;
+    if (args.length < 2) {
+      return 1;
+    }
 
-  if (args.length < 2) {
-    return 1;
+    static immutable time =
+      Unit("time", [
+             Unit.Scale("ms", 1),
+             Unit.Scale("s", 1000),
+             Unit.Scale("m", 60),
+             Unit.Scale("h", 60)
+           ]);
+
+    auto childCommand = args[1..$];
+    auto cmd = escapeShellCommand(childCommand);
+    auto sw = StopWatch(AutoStart.yes);
+    auto pid = spawnShell(cmd);
+    auto exitCode = pid.wait();
+    TickDuration duration = sw.peek();
+    auto d = duration.to!("msecs", long);
+
+    writecln(exitCode == 0 ? Fg.green : Fg.red, childCommand, Fg.initial, " took ", time
+             .transform(d)
+             .onlyRelevant
+             .map!((a) => a.toString)
+             .join(" "));
+    return exitCode;
   }
-
-  static immutable time =
-    Unit("time", [
-           Unit.Scale("ms", 1),
-           Unit.Scale("s", 1000),
-           Unit.Scale("m", 60),
-           Unit.Scale("h", 60)
-         ]);
-
-  auto childCommand = args[1..$];
-  auto cmd = escapeShellCommand(childCommand);
-  auto sw = StopWatch(AutoStart.yes);
-  auto pid = spawnShell(cmd);
-  auto exitCode = pid.wait();
-  TickDuration duration = sw.peek();
-  auto d = duration.to!("msecs", long);
-
-  writecln(exitCode == 0 ? Fg.green : Fg.red, childCommand, Fg.initial, " took ", time
-           .transform(d)
-           .onlyRelevant
-           .map!((a) => a.toString)
-           .join(" "));
-  return exitCode;
 }
