@@ -4,9 +4,18 @@ authors "Christian Köstlin"
 copyright "Copyright © 2017, Christian Köstlin"
 license "MIT"
 dependency "consoled" version="==1.0.4"
-dependency "unit-threaded" version="==0.7.4"
+
+configuration "application" {
+  targetType "executable"
+
+  mainSourceFile "source/app.d"
+}
+
 configuration "unittest" {
   targetType "executable"
+
+  dependency "unit-threaded" version="==0.7.4"
   preBuildCommands "dub run unit-threaded -c gen_ut_main -- -f gen/ut.d"
   mainSourceFile "gen/ut.d"
+  excludedSourceFiles "source/app.d"
 }
