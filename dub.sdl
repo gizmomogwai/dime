@@ -11,6 +11,11 @@ configuration "application" {
   mainSourceFile "source/app.d"
 }
 
+configuration "library" {
+  targetType "staticLibrary"
+  excludedSourceFiles "source/app.d"
+}
+
 configuration "unittest" {
   targetType "executable"
 
