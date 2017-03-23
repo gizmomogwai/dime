@@ -9,7 +9,7 @@ task :test do
 end
 
 desc 'do a release build (after testing)'
-task :build => [:test]do
+task :build => [:test] do
   sh "dub clean"
   sh "dub build --build=release"
 end

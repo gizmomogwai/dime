@@ -7,6 +7,8 @@ int dime(string[] args) {
   import std.datetime;
   import std.process;
   import std.algorithm.iteration;
+  import std.string;
+  import std.conv;
 
   if (args.length < 2) {
     return 1;
@@ -14,10 +16,10 @@ int dime(string[] args) {
 
   static immutable time =
     Unit("time", [
-           Unit.Scale("ms", 1),
-           Unit.Scale("s", 1000),
-           Unit.Scale("m", 60),
-           Unit.Scale("h", 60)
+           Unit.Scale("ms", 1, 3),
+           Unit.Scale("s", 1000, 2),
+           Unit.Scale("m", 60, 2),
+           Unit.Scale("h", 60, 2)
          ]);
 
   auto childCommand = args[1..$];
@@ -27,11 +29,16 @@ int dime(string[] args) {
   auto exitCode = pid.wait();
   TickDuration duration = sw.peek();
   auto d = duration.to!("msecs", long);
-
   writecln(exitCode == 0 ? Fg.green : Fg.red, childCommand, Fg.initial, " took ", time
            .transform(d)
            .onlyRelevant
-           .map!((a) => a.toString)
+           .map!((part) => ("%0" ~ part.digits.to!string ~ "d %s").format(part.value, part.name))
            .join(" "));
   return exitCode;
+}
+
+unittest {
+  import unit_threaded;
+  import std.string;
+  "%03d".format(1).shouldEqual("001");
 }
