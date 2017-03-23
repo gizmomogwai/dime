@@ -16,10 +16,10 @@ int dime(string[] args) {
 
   static immutable time =
     Unit("time", [
-           Unit.Scale("ms", 1, 3),
-           Unit.Scale("s", 1000, 2),
-           Unit.Scale("m", 60, 2),
-           Unit.Scale("h", 60, 2)
+           Unit.scale("ms", 1, 3),
+           Unit.scale("s", 1000, 2),
+           Unit.scale("m", 60, 2),
+           Unit.scale("h", 60, 2)
          ]);
 
   auto childCommand = args[1..$];
@@ -37,8 +37,10 @@ int dime(string[] args) {
   return exitCode;
 }
 
-unittest {
+@("formatWithWidth") unittest {
   import unit_threaded;
   import std.string;
   "%03d".format(1).shouldEqual("001");
+
+  "%01d".format(1).shouldEqual("1");
 }
