@@ -1,33 +1,68 @@
+/++
+ + a unit allows to easily print mixed resolution values.
+ + typical examples include time (with hours, minutes, ...)
+ + and distances (with km, m, cm, mm).
+ + The unitclass simplifies definition of such things as well
+ + as transforming a high resolution value, to a supposedly
+ + more human readable representation.
+ + e.g. 3_610_123 would convert to 1h 0m 10s 123ms.
+ +/
 public struct Unit {
   import std.algorithm.iteration;
   import std.range;
 
+  /++
+   + A scale is one resolution of a unit.
+   +/
   public struct Scale {
+    /// the name of the scale (e.g. h for hour)
     string name;
+
+    /// factor to the next higher resolution (e.g. 60 from minutes to seconds)
     long factor;
+
+    /// normal renderwidth for the application (e.g. 2 for minutes (00-59))
     int digits;
   }
 
+  /// factory for Scale
+  static Scale scale(string name, long factor, int digits=1) {
+    return Scale(name, factor, digits);
+  }
+
+  /++
+   + One part of the transformed Unit.
+   + a part of a unit is e.g. the minute resolution of a duration.
+   +/
   public struct Part {
+    /// name of the part
     string name;
+    /// value of the part
     long value;
+    /// number of digits
     int digits;
+    /// convenient tostring function. e.g. 10min
     string toString() {
       import std.conv;
       return value.to!(string) ~ name;
     }
   }
 
+  /// name of the unit
   private string name;
+  /// resolutions of the unit
   private Scale[] scales;
 
   public this(string name, Scale[] scales) {
     import std.exception;
     this.name = name;
-    this.scales = cumulativeFold!((result,x) => Scale(x.name, result.factor * x.factor, x.digits))(scales).array.retro.array;
+    this.scales = cumulativeFold!((result,x) => scale(x.name, result.factor * x.factor, x.digits))(scales).array.retro.array;
     enforce(__ctfe);
   }
 
+  /++
+   + transforms the unit to its parts
+   +/
   public Part[] transform(long v) immutable {
     import std.array;
 
@@ -40,6 +75,15 @@ public struct Unit {
     }
     return res.data;
   }
+}
+
+@("creatingScales") unittest {
+  import unit_threaded;
+  auto s = Unit.scale("ttt", 1, 2);
+  s.digits.shouldEqual(2);
+
+  s = Unit.scale("ttt2", 1);
+  s.digits.shouldEqual(1);
 }
 
 /++
@@ -71,7 +115,10 @@ Unit.Part[] mostSignificant(Unit.Part[] parts, long nr) {
   return parts[0..max];
 }
 
-unittest {
+/++
+ + example for a time unit definition
+ +/
+@("basicUsage") unittest {
   import unit_threaded;
 
   static immutable time = Unit("time", [Unit.Scale("ms", 1), Unit.Scale("s", 1000), Unit.Scale("m", 60), Unit.Scale("h", 60), Unit.Scale("d", 24)]);
