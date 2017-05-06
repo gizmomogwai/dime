@@ -1,14 +1,15 @@
 module dime;
-import unit;
 
 int dime(string[] args) {
-  import consoled;
+  import unit;
+  import colors;
   import std.array;
   import std.datetime;
   import std.process;
   import std.algorithm.iteration;
   import std.string;
   import std.conv;
+  import std.stdio;
 
   if (args.length < 2) {
     return 1;
@@ -29,11 +30,12 @@ int dime(string[] args) {
   auto exitCode = pid.wait();
   TickDuration duration = sw.peek();
   auto d = duration.to!("msecs", long);
-  writecln(exitCode == 0 ? Fg.green : Fg.red, childCommand, Fg.initial, " took ", time
-           .transform(d)
-           .onlyRelevant
-           .map!((part) => ("%0" ~ part.digits.to!string ~ "d %s").format(part.value, part.name))
-           .join(" "));
+  auto s = childCommand.to!string;
+  writeln(exitCode == 0 ? s.green : s.red, " took ", time
+          .transform(d)
+          .onlyRelevant
+          .map!((part) => ("%0" ~ part.digits.to!string ~ "d %s").format(part.value, part.name))
+          .join(" "));
   return exitCode;
 }
 

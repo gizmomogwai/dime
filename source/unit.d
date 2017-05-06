@@ -1,3 +1,5 @@
+module unit;
+
 /++
  + a unit allows to easily print mixed resolution values.
  + typical examples include time (with hours, minutes, ...)
@@ -124,7 +126,7 @@ Unit.Part[] mostSignificant(Unit.Part[] parts, long nr) {
   static immutable time = Unit("time", [Unit.Scale("ms", 1), Unit.Scale("s", 1000), Unit.Scale("m", 60), Unit.Scale("h", 60), Unit.Scale("d", 24)]);
 
   auto res = time.transform(1 + 2*1000 + 3*1000*60 + 4*1000*60*60 + 5 * 1000*60*60*24);
-  res.length.shouldEqual(5);
+  res.length.shouldEqual(6);
   res[0].name.shouldEqual("d");
   res[0].value.shouldEqual(5);
   res[1].name.shouldEqual("h");

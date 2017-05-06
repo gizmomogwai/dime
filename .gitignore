@@ -7,3 +7,6 @@ __test__*__
 dime
 gen
 /libdime.a
+*.lst
+/dime-test-ut
+*.log

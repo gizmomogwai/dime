@@ -5,7 +5,7 @@ end
 
 desc 'test'
 task :test do
-  sh "dub test"
+  sh "dub test -c ut || dub test"
 end
 
 desc 'do a release build (after testing)'
