@@ -40,9 +40,9 @@ string asMixin() {
   return res;
 }
 */
-string asMixin() {
+string asMixin(T)() {
   string res = "";
-  foreach (immutable ansiColor; [EnumMembers!AnsiColors]) {
+  foreach (immutable ansiColor; [EnumMembers!T]) {
     {
       immutable name = ansiColor.to!string;
       immutable value = ansiColor.to!int.to!string;
@@ -57,4 +57,16 @@ string asMixin() {
   }
   return res;
 }
-mixin(asMixin());
+
+unittest {
+  import unit_threaded;
+  enum TTT {
+    r = 1
+  }
+  asMixin!TTT.shouldEqual(
+`string r(string s) { return "\033[1m" ~ s ~ "\033[0m";}
+string bgR(string s) { return "\033[11m" ~ s ~ "\033[0m";}
+`);
+}
+
+mixin(asMixin!AnsiColors);
