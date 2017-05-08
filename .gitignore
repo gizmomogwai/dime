@@ -10,3 +10,4 @@ gen
 *.lst
 /dime-test-ut
 *.log
+/unittest
