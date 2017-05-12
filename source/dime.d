@@ -31,7 +31,7 @@ int dime(string[] args) {
   TickDuration duration = sw.peek();
   auto d = duration.to!("msecs", long);
   auto s = childCommand.to!string;
-  writeln(exitCode == 0 ? s.green : s.red, " took ", time
+  writeln(exitCode == 0 ? s.green.to!string : s.bgRed.black.to!string, " took ", time
           .transform(d)
           .onlyRelevant
           .map!((part) => ("%0" ~ part.digits.to!string ~ "d %s").format(part.value, part.name))
@@ -43,6 +43,5 @@ int dime(string[] args) {
   import unit_threaded;
   import std.string;
   "%03d".format(1).shouldEqual("001");
-
   "%01d".format(1).shouldEqual("1");
 }
