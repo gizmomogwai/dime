@@ -1,7 +1,7 @@
 * Dime
-[[https://travis-ci.org/gizmomogwai/dime][https://travis-ci.org/gizmomogwai/dime.svg?branch=master]]
+[[https://travis-ci.org/gizmomogwai/dime][https://travis-ci.org/gizmomogwai/dime.svg?branch=master]][[https://codecov.io/gh/gizmomogwai/dime][https://codecov.io/gh/gizmomogwai/dime/branch/master/graph/badge.svg]]
 A tiny time implementation in dlang.
 
-Visualizes the exit code of the timed program in color and forwards the exit code.
+Measures execution wall time, colorizes the exit code of the command and forwards the exit code.
 
 Thanks [[https://github.com/flxo/duration][flxo]] for the inspiration.
