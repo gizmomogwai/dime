@@ -1,6 +1,7 @@
 {
 	"fileVersion": 1,
 	"versions": {
-		"unit-threaded": "0.7.22"
+		"colored": "0.0.3",
+		"unit-threaded": "0.7.25"
 	}
 }

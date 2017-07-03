@@ -2,7 +2,7 @@ module dime;
 
 int dime(string[] args) {
   import unit;
-  import colors;
+  import colored;
   import std.array;
   import std.datetime;
   import std.process;
@@ -31,7 +31,7 @@ int dime(string[] args) {
   TickDuration duration = sw.peek();
   auto d = duration.to!("msecs", long);
   auto s = childCommand.to!string;
-  writeln(exitCode == 0 ? s.green.to!string : s.bgRed.black.to!string, " took ", time
+  writeln(exitCode == 0 ? s.green.to!string : s.black.onRed.to!string, " took ", time
           .transform(d)
           .onlyRelevant
           .map!((part) => ("%0" ~ part.digits.to!string ~ "d %s").format(part.value, part.name))
