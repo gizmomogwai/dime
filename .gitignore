@@ -11,3 +11,4 @@ gen
 /dime-test-ut
 *.log
 /unittest
+*~
