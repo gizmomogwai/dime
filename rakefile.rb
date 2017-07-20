@@ -10,6 +10,7 @@ end
 
 desc 'do a release build (after testing)'
 task :build => [:test] do
+  sh 'find . -name "*.d" | xargs dfmt'
   sh "dub clean"
   sh "dub build --build=release"
 end
