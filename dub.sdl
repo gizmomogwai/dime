@@ -3,7 +3,8 @@ description "A simple time implementation in dlang."
 authors "Christian Köstlin"
 copyright "Copyright © 2017, Christian Köstlin"
 license "MIT"
-dependency "colored" version="==0.0.3"
+dependency "colored" version="~>0.0.7"
+#x:ddoxTool "scod"
 
 configuration "application" {
   targetType "executable"
@@ -24,7 +25,7 @@ configuration "unittest" {
   targetName "unittest"
   targetPath "out/test"
 
-  dependency "unit-threaded" version="==0.7.25"
+  dependency "unit-threaded" version="~>0.7.31"
   preBuildCommands "dub run unit-threaded -c gen_ut_main -- -f gen/testsuite.d"
   mainSourceFile "gen/testsuite.d"
   excludedSourceFiles "source/app.d"
@@ -36,7 +37,7 @@ configuration "ut" {
   targetPath "out/test"
 
   versions "unitThreadedLight"
-  dependency "unit-threaded" version="==0.7.25"
+  dependency "unit-threaded" version="~>0.7.31"
   mainSourceFile "gen/testsuite.d"
   excludedSourceFiles "source/app.d"
 }

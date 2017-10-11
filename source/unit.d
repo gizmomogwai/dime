@@ -1,8 +1,11 @@
+/++
+ + Print human readable units (e.g. time in days, hours, minutes or distance in km, m, cm, mm).
+ +/
 module unit;
 
 /++
- + a unit allows to easily print mixed resolution values.
- + typical examples include time (with hours, minutes, ...)
+ + A unit allows to easily print mixed resolution values.
+ + Typical examples include time (with hours, minutes, ...)
  + and distances (with km, m, cm, mm).
  + The unitclass simplifies definition of such things as well
  + as transforming a high resolution value, to a supposedly
@@ -15,8 +18,8 @@ public struct Unit
     import std.range;
 
     /++
-   + A scale is one resolution of a unit.
-   +/
+     + A scale is one resolution of a unit.
+     +/
     public struct Scale
     {
         /// the name of the scale (e.g. h for hour)
@@ -72,8 +75,8 @@ public struct Unit
     }
 
     /++
-   + transforms the unit to its parts
-   +/
+     + transforms the unit to its parts
+     +/
     public Part[] transform(long v) immutable
     {
         import std.array;
@@ -127,7 +130,7 @@ Unit.Part[] onlyRelevant(Unit.Part[] parts)
 }
 
 /++
- + get the first nr of parts (or less if not enough parts are available.
+ + get the first nr of parts (or less if not enough parts are available).
  +/
 Unit.Part[] mostSignificant(Unit.Part[] parts, long nr)
 {

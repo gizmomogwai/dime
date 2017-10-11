@@ -15,4 +15,8 @@ task :build => [:test] do
   sh "dub build --build=release"
 end
 
+desc 'format'
+task :format do
+  sh "find . -name \"*.d\" | xargs dfmt -i"
+end
 task :default => [:build]
