@@ -1,5 +1,13 @@
+/++
+ + main unit of dime.
+ +/
 module dime;
 
+/**
+ * measure the time for calling args
+ * Params:
+ * args = shell command
+ */
 int dime(string[] args)
 {
     import unit;
@@ -28,7 +36,7 @@ int dime(string[] args)
     TickDuration duration = sw.peek();
     auto d = duration.to!("msecs", long);
     auto s = childCommand.to!string;
-    writeln(exitCode == 0 ? s.green.to!string : s.black.onRed.to!string,
+    stderr.writeln(exitCode == 0 ? s.green.to!string : s.black.onRed.to!string,
             " took ", time.transform(d)
             .onlyRelevant.map!((part) => ("%0" ~ part.digits.to!string ~ "d %s")
                 .format(part.value, part.name)).join(" "));

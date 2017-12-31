@@ -25,15 +25,20 @@ public struct Unit
         /// the name of the scale (e.g. h for hour)
         string name;
 
-        /// factor to the next higher resolution (e.g. 60 from minutes to seconds)
+        /++ factor to the next higher resolution (e.g. 60 from minutes to seconds) +/
         long factor;
 
-        /// normal renderwidth for the application (e.g. 2 for minutes (00-59))
+        /++ normal renderwidth for the application (e.g. 2 for minutes (00-59)) +/
         int digits;
     }
 
-    /// factory for Scale
-    static Scale scale(string name, long factor, int digits = 1)
+    /++ factory for Scale
+     + Params:
+     + name = unitname
+     + factor = factor to the next bigger unit
+     + digits = padding digits
+     +/
+    static auto scale(string name, long factor, int digits = 1)
     {
         return Scale(name, factor, digits);
     }
@@ -51,7 +56,7 @@ public struct Unit
         /// number of digits
         int digits;
         /// convenient tostring function. e.g. 10min
-        string toString()
+        auto toString()
         {
             import std.conv;
 
@@ -77,7 +82,7 @@ public struct Unit
     /++
      + transforms the unit to its parts
      +/
-    public Part[] transform(long v) immutable
+    public auto transform(long v) immutable
     {
         import std.array;
 
@@ -109,7 +114,7 @@ public struct Unit
  + relevant means all details starting from the first
  + non 0 part.
  +/
-Unit.Part[] onlyRelevant(Unit.Part[] parts)
+auto onlyRelevant(Unit.Part[] parts)
 {
     import std.array;
 
@@ -132,7 +137,7 @@ Unit.Part[] onlyRelevant(Unit.Part[] parts)
 /++
  + get the first nr of parts (or less if not enough parts are available).
  +/
-Unit.Part[] mostSignificant(Unit.Part[] parts, long nr)
+auto mostSignificant(Unit.Part[] parts, long nr)
 {
     import std.algorithm.comparison;
 
