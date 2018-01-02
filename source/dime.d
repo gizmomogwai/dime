@@ -13,6 +13,7 @@ int dime(string[] args)
     import unit;
     import colored;
     import std.array;
+    import std.datetime.stopwatch;
     import std.datetime;
     import std.process;
     import std.algorithm.iteration;
@@ -30,11 +31,11 @@ int dime(string[] args)
 
     auto childCommand = args[1 .. $];
     auto cmd = escapeShellCommand(childCommand);
-    auto sw = StopWatch(AutoStart.yes);
+    auto sw = std.datetime.stopwatch.StopWatch(AutoStart.yes);
     auto pid = spawnShell(cmd);
     auto exitCode = pid.wait();
-    TickDuration duration = sw.peek();
-    auto d = duration.to!("msecs", long);
+    auto duration = sw.peek();
+    auto d = duration.total!("msecs");
     auto s = childCommand.to!string;
     stderr.writeln(exitCode == 0 ? s.green.to!string : s.black.onRed.to!string,
             " took ", time.transform(d)

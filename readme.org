@@ -1,8 +1,10 @@
 * Dime
-[[https://github.com/gizmomogwai/dime][https://img.shields.io/github/tag/gizmomogwai/dime.svg]][[https://travis-ci.org/gizmomogwai/dime][https://travis-ci.org/gizmomogwai/dime.svg?branch=master]][[https://codecov.io/gh/gizmomogwai/dime][https://codecov.io/gh/gizmomogwai/dime/branch/master/graph/badge.svg]]
+[[https://github.com/gizmomogwai/dime][https://img.shields.io/github/tag/gizmomogwai/dime.svg]][[https://travis-ci.org/gizmomogwai/dime][https://travis-ci.org/gizmomogwai/dime.svg?branch=master]][[https://codecov.io/gh/gizmomogwai/dime][https://codecov.io/gh/gizmomogwai/dime/branch/master/graph/badge.svg]][[https://gizmomogwai.github.io/dime/][https://img.shields.io/readthedocs/pip.svg]]
 
 A tiny time implementation in dlang.
 
 Measures execution wall time, colorizes the exit code of the command and forwards the exit code.
 
 Thanks [[https://github.com/flxo/duration][flxo]] for the inspiration.
+
+* [[https://gizmomogwai.github.io/dime/][Api]]

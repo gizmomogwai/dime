@@ -4,7 +4,7 @@ authors "Christian Köstlin"
 copyright "Copyright © 2017, Christian Köstlin"
 license "MIT"
 dependency "colored" version="~>0.0.7"
-x:ddoxTool "scod"
+x:ddoxFilterArgs "--min-protection=Private"
 
 configuration "application" {
   targetType "executable"
