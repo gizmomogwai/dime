@@ -1,5 +1,21 @@
 language: d
 sudo: false
+addons:
+  apt:
+    packages:
+    - libevent-dev
 before_install: pip install --user codecov
-script: dub test --compiler=${DC} --coverage
+script:
+- dub test --compiler=${DC} --coverage
+- dub build -b ddox
 after_success: codecov
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: "$TRAVIS_BUILD_DIR/docs"
+  github_token: "$GH_REPO_TOKEN"
+  on:
+    branch: master
+env:
+  global:
+    secure: l1ajFgnWtCwSVYLAJOthV/9y2VWgODeo2KgIx2zVb43DLb/FH9WDHfbYe0i32Gy+9K8OP+LziVlfc2kRBkko3mJ/t0pOHzWp+py23J3oggBGEQGLU4w78EDaeNjQbkLa+ZiwoOCv5UjD1q3VzeUsu5RWlrjD/TxXLsB6HUk+tGSx+OKDXLHntASLx4xep0gR6Mn8/7k1ov+QtIqtNvAX9b+zzMI1picyzgkel+y82Qif2dwhMC8awpYUT3ja9ba71Kc5YnrCX6zJXCuSWTyrxg0PaVHXd8X4YHwkzkkDqI9ZCArFd0GDTdHRTXhHBs/tWLbupZxkffmCcY7SbO2RdRbt1T2FaxBgD9XAM01IRenp2UUYkgCzp5ENUHyDElR2LNR0EYYZPPGBM1275OFuvdU9MNNfunJzo5QZYO3GwqVey9HRM33CbKNQaBil9WsZwwiVyV9zB9N183hHFEhHjLOlCMxIxFgFJ7+3ftLyuiI+hzrlulq3kv69u42F63ToaW+tLEDNbdj0mh2rhWqGPHd73I6Fa8zeEkLgqRKf5IJVFpTq+Y+MjOeqwz0qirplvv8fpv9HVRskKtdkKE2+VrOcgttRU8cySFtdsdgZmwf//ZcYkPentGsLkW2rndiBuyzGdU8ltcIdtqp6PmvQhBTNqa5ztHVtlSb2O+OFTTs=
