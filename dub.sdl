@@ -10,6 +10,13 @@ x:ddoxFilterArgs "--min-protection=Private"
 dependency "packageversion" version="~>0.0.12"
 subConfiguration "packageversion" "library"
 
+configuration "library" {
+  targetType "library"
+  targetPath "out/lib"
+
+  excludedSourceFiles "source/app.d"
+}
+
 configuration "application" {
   targetType "executable"
   targetPath "out/main"

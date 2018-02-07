@@ -152,10 +152,8 @@ auto mostSignificant(Unit.Part[] parts, long nr)
 {
     import unit_threaded;
 
-    static immutable time = Unit("time", [Unit.Scale("ms", 1), Unit.Scale("s",
-            1000), Unit.Scale("m", 60), Unit.Scale("h", 60), Unit.Scale("d", 24)]);
 
-    auto res = time.transform(1 + 2 * 1000 + 3 * 1000 * 60 + 4 * 1000 * 60 * 60
+    auto res = TIME.transform(1 + 2 * 1000 + 3 * 1000 * 60 + 4 * 1000 * 60 * 60
             + 5 * 1000 * 60 * 60 * 24);
     res.length.shouldEqual(5);
     res[0].name.shouldEqual("d");
@@ -169,15 +167,25 @@ auto mostSignificant(Unit.Part[] parts, long nr)
     res[4].name.shouldEqual("ms");
     res[4].value.shouldEqual(1);
 
-    res = time.transform(2001).onlyRelevant;
+    res = TIME.transform(2001).onlyRelevant;
     res.length.shouldEqual(2);
     res[0].name.shouldEqual("s");
     res[0].value.shouldEqual(2);
     res[1].name.shouldEqual("ms");
     res[1].value.shouldEqual(1);
 
-    res = time.transform(2001).onlyRelevant.mostSignificant(1);
+    res = TIME.transform(2001).onlyRelevant.mostSignificant(1);
     res.length.shouldEqual(1);
     res[0].name.shouldEqual("s");
     res[0].value.shouldEqual(2);
 }
+
+// dfmt off
+static immutable TIME =
+    Unit("time",
+         [Unit.Scale("ms", 1),
+          Unit.Scale("s", 1000),
+          Unit.Scale("m", 60),
+          Unit.Scale("h", 60),
+          Unit.Scale("d", 24)]);
+// dfmt on

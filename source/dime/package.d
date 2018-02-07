@@ -26,9 +26,6 @@ int dime(string[] args)
         return 1;
     }
 
-    static immutable time = Unit("time", [Unit.scale("ms", 1, 3),
-            Unit.scale("s", 1000, 2), Unit.scale("m", 60, 2), Unit.scale("h", 60, 2)]);
-
     auto childCommand = args[1 .. $];
     auto cmd = escapeShellCommand(childCommand);
     auto sw = std.datetime.stopwatch.StopWatch(AutoStart.yes);
@@ -37,10 +34,15 @@ int dime(string[] args)
     auto duration = sw.peek();
     auto d = duration.total!("msecs");
     auto s = childCommand.to!string;
-    stderr.writeln(exitCode == 0 ? s.green.to!string : s.black.onRed.to!string,
-            " took ", time.transform(d)
-            .onlyRelevant.map!((part) => ("%0" ~ part.digits.to!string ~ "d %s")
-                .format(part.value, part.name)).join(" "));
+    // dfmt off
+    stderr.writeln("%s took %s".format(
+                     exitCode == 0 ? s.green.to!string : s.black.onRed.to!string,
+                     TIME
+                         .transform(d)
+                         .onlyRelevant.map!((part) => ("%0" ~ part.digits.to!string ~ "d %s")
+                         .format(part.value, part.name))
+                         .join(" ")));
+    // dfmt on
     return exitCode;
 }
 
