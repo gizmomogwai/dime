@@ -1,6 +1,6 @@
-import dime : dime;
+import dime : dime_;
 
 int main(string[] args)
 {
-    return dime(args);
+    return dime_(args);
 }

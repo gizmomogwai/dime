@@ -4,11 +4,19 @@ authors "Christian Köstlin"
 copyright "Copyright © 2017, Christian Köstlin"
 license "MIT"
 
-dependency "colored" version="~>0.0.10"
 x:ddoxFilterArgs "--min-protection=Private"
 
-dependency "packageversion" version="~>0.0.12"
+dependency "colored" version="~>0.0.11"
+
+dependency "packageversion" version="~>0.0.15"
 subConfiguration "packageversion" "library"
+
+preBuildCommands "dub run packageversion -- --packageName=dime"
+sourceFiles "out/generated/packageversion/dime/packageversion.d"
+sourcePaths "source" "out/generated/packageversion"
+importPaths "source" "out/generated/packageversion"
+
+dependency "asciitable" version="~>0.0.3"
 
 configuration "library" {
   targetType "library"

@@ -3,12 +3,14 @@
  +/
 module dime;
 
+public import dime.packageversion;
+
 /**
  * measure the time for calling args
  * Params:
  * args = shell command
  */
-int dime(string[] args)
+int dime_(string[] args)
 {
     import unit;
     import colored;
@@ -20,10 +22,22 @@ int dime(string[] args)
     import std.string;
     import std.conv;
     import std.stdio;
+    import std.getopt;
 
-    if (args.length < 2)
+    auto help = getopt(args);
+    if (help.helpWanted)
     {
-        return 1;
+        defaultGetoptPrinter("D(t)ime your programs.", help.options);
+        import packageversion;
+        import std.algorithm : sort;
+        import asciitable;
+        // dfmt off
+        auto table = packageversion
+            .getPackages.sort!("a.name < b. name")
+            .fold!((table, p) => table.add(p.name, p.semVer, p.license))(AsciiTable(0, 0, 0));
+        // dfmt on
+        writeln("Packages:\n", table.toString("   ", " "));
+        return 0;
     }
 
     auto childCommand = args[1 .. $];

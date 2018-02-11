@@ -152,7 +152,6 @@ auto mostSignificant(Unit.Part[] parts, long nr)
 {
     import unit_threaded;
 
-
     auto res = TIME.transform(1 + 2 * 1000 + 3 * 1000 * 60 + 4 * 1000 * 60 * 60
             + 5 * 1000 * 60 * 60 * 24);
     res.length.shouldEqual(5);
