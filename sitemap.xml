@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>http://127.0.0.1/index.html</loc></url>
+<url><loc>http://127.0.0.1/dime/packageversion.html</loc></url>
+<url><loc>http://127.0.0.1/dime/packageversion/LICENSE.html</loc></url>
+<url><loc>http://127.0.0.1/dime/packageversion/NAME.html</loc></url>
+<url><loc>http://127.0.0.1/dime/packageversion/VERSION.html</loc></url>
+<url><loc>http://127.0.0.1/dime.html</loc></url>
+<url><loc>http://127.0.0.1/dime/dime_.html</loc></url>
+<url><loc>http://127.0.0.1/unit.html</loc></url>
+<url><loc>http://127.0.0.1/unit/mostSignificant.html</loc></url>
+<url><loc>http://127.0.0.1/unit/onlyRelevant.html</loc></url>
+<url><loc>http://127.0.0.1/unit/TIME.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.Part.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.Part.digits.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.Part.name.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.Part.toString.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.Part.value.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.Scale.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.Scale.digits.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.Scale.factor.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.Scale.name.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.scale.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.this.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.transform.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.name.html</loc></url>
+<url><loc>http://127.0.0.1/unit/Unit.scales.html</loc></url>
+</urlset>

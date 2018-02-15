@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Struct Unit</title>
+		<link rel="stylesheet" type="text/css" href="../styles/ddox.css"/>
+		<link rel="stylesheet" href="../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../scripts/jquery.js">/**/</script><script type="text/javascript" src="../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view collapsed">
+					<div class="package ">
+						<a href="../dime.html">dime</a>
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../dime/packageversion.html">packageversion</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="../unit.html">unit</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Struct Unit</h1><p>A unit allows to easily print mixed resolution values.
+ Typical examples include time (with hours, minutes, ...)
+ and distances (with km, m, cm, mm).
+ The unitclass simplifies definition of such things as well
+ as transforming a high resolution value, to a supposedly
+ more human readable representation.
+ e.g. 3_610_123 would convert to 1h 0m 10s 123ms.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="kwd">struct</span> <span class="typ">Unit</span>
+			<span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			
+			<section><h2>Constructors</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../unit/Unit.this.html" class="public">
+								<code>this</code>
+							</a>
+						</td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Fields</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../unit/Unit.name.html" class="private"><code>name</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td><td>name of the unit
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../unit/Unit.scales.html" class="private"><code>scales</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><a href="../unit/Unit.Scale.html"><span class="typ">Unit<wbr/></span><span class="pun">.<wbr/></span><span class="typ">Scale</span></a><span class="pun">[]</span></code></td><td>resolutions of the unit
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Methods</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../unit/Unit.scale.html" class="public">
+								<code>scale</code>
+							</a>
+						</td>
+						<td>factory for Scale
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../unit/Unit.transform.html" class="public">
+								<code>transform</code>
+							</a>
+						</td>
+						<td>transforms the unit to its parts
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Inner structs</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../unit/Unit.Part.html" class="public">
+								<code>Part</code>
+							</a>
+						</td>
+						<td>One part of the transformed Unit.
+ a part of a unit is e.g. the minute resolution of a duration.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../unit/Unit.Scale.html" class="public">
+								<code>Scale</code>
+							</a>
+						</td>
+						<td>A scale is one resolution of a unit.
+</td>
+					</tr>
+				</table>
+			</section>
+			
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>
