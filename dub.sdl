@@ -11,7 +11,7 @@ dependency "colored" version="~>0.0.11"
 dependency "packageversion" version="~>0.0.15"
 subConfiguration "packageversion" "library"
 
-preBuildCommands "dub run packageversion -- --packageName=dime"
+preBuildCommands "packageversion --packageName=dime || dub run packageversion -- --packageName=dime"
 sourceFiles "out/generated/packageversion/dime/packageversion.d"
 sourcePaths "source" "out/generated/packageversion"
 importPaths "source" "out/generated/packageversion"
