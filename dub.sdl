@@ -6,12 +6,12 @@ license "MIT"
 
 x:ddoxFilterArgs "--min-protection=Private"
 
-dependency "colored" version="~>0.0.11"
+dependency "colored" version="~>0.0.12"
 
 dependency "packageversion" version="~>0.0.15"
 subConfiguration "packageversion" "library"
 
-preBuildCommands "packageversion --packageName=dime || dub run packageversion -- --packageName=dime"
+preGenerateCommands "packageversion --packageName=dime || dub run packageversion -- --packageName=dime"
 sourceFiles "out/generated/packageversion/dime/packageversion.d"
 sourcePaths "source" "out/generated/packageversion"
 importPaths "source" "out/generated/packageversion"

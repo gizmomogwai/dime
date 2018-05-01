@@ -44,9 +44,9 @@ public struct Unit
     }
 
     /++
-   + One part of the transformed Unit.
-   + a part of a unit is e.g. the minute resolution of a duration.
-   +/
+     + One part of the transformed Unit.
+     + a part of a unit is e.g. the minute resolution of a duration.
+     +/
     public struct Part
     {
         /// name of the part
@@ -96,6 +96,89 @@ public struct Unit
         }
         return res.data;
     }
+
+    private static auto parseNumberAndUnit(string s)
+    {
+        import std.ascii;
+        string value;
+        while (!s.empty)
+        {
+            auto n = s.front;
+            if (n == ' ')
+            {
+                s.popFront;
+                continue;
+            }
+            if (isDigit(n))
+            {
+                value ~= n;
+                s.popFront;
+            }
+            else
+            {
+                break;
+            }
+        }
+        string name;
+        while (!s.empty)
+        {
+            auto n = s.front;
+            if (n == ' ')
+            {
+                s.popFront;
+                continue;
+            }
+            if (isAlpha(n))
+            {
+                name ~= n;
+                s.popFront;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        auto rest = s;
+        import std.typecons;
+        if ((name.length > 0) && (value.length > 0))
+        {
+            return tuple!("found", "name", "value", "rest")(true, name, value, rest);
+        }
+        else
+        {
+            return tuple!("found", "name", "value", "rest")(false, "", "", "");
+        }
+    }
+
+    long parse(string s) immutable
+    {
+        import std.ascii;
+        long res = 0;
+        auto next = parseNumberAndUnit(s);
+        while (next.found)
+        {
+            import std.algorithm;
+            auto scale = scales.find!(i => i.name == next.name);
+            if (scale.empty)
+            {
+                throw new Exception("unknown unit " ~ next.name);
+            }
+            import std.conv;
+            res += std.conv.to!(long)(next.value) * scale.front.factor;
+            next = parseNumberAndUnit(next.rest);
+        }
+        return res;
+    }
+}
+
+@("parse") unittest
+{
+    import unit_threaded;
+
+    TIME.parse("1s 2ms").shouldEqual(1002);
+    TIME.parse("1s2ms").shouldEqual(1002);
+    TIME.parse("1blub2ms").shouldThrow;
 }
 
 @("creatingScales") unittest

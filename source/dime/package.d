@@ -31,6 +31,7 @@ int dime_(string[] args)
         import packageversion;
         import std.algorithm : sort;
         import asciitable;
+
         // dfmt off
         auto table = packageversion
             .getPackages.sort!("a.name < b. name")
@@ -53,9 +54,9 @@ int dime_(string[] args)
                      exitCode == 0 ? s.green.to!string : s.black.onRed.to!string,
                      TIME
                          .transform(d)
-                         .onlyRelevant.map!((part) => ("%0" ~ part.digits.to!string ~ "d %s")
-                         .format(part.value, part.name))
-                         .join(" ")));
+                         .onlyRelevant.map!((part) =>
+                                            ("%0" ~ part.digits.to!string ~ "d %s").format(part.value, part.name))
+                     .join(" ")));
     // dfmt on
     return exitCode;
 }
