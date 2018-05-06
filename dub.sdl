@@ -8,13 +8,6 @@ x:ddoxFilterArgs "--min-protection=Private"
 
 dependency "colored" version="~>0.0.12"
 
-dependency "packageversion" version="~>0.0.15"
-subConfiguration "packageversion" "library"
-
-preGenerateCommands "packageversion || dub run packageversion"
-sourcePaths "source" "out/generated/packageversion"
-importPaths "source" "out/generated/packageversion"
-
 dependency "asciitable" version="~>0.0.3"
 
 configuration "library" {
@@ -29,6 +22,13 @@ configuration "application" {
   targetPath "out/main"
 
   mainSourceFile "source/app.d"
+
+  dependency "packageversion" version="~>0.0.15"
+  subConfiguration "packageversion" "library"
+
+  preGenerateCommands "packageversion || dub run packageversion"
+  sourcePaths "source" "out/generated/packageversion"
+  importPaths "source" "out/generated/packageversion"
 }
 
 configuration "unittest" {
