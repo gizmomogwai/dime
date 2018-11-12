@@ -100,6 +100,7 @@ public struct Unit
     private static auto parseNumberAndUnit(string s)
     {
         import std.ascii;
+
         string value;
         while (!s.empty)
         {
@@ -141,6 +142,7 @@ public struct Unit
 
         auto rest = s;
         import std.typecons;
+
         if ((name.length > 0) && (value.length > 0))
         {
             return tuple!("found", "name", "value", "rest")(true, name, value, rest);
@@ -154,17 +156,20 @@ public struct Unit
     long parse(string s) immutable
     {
         import std.ascii;
+
         long res = 0;
         auto next = parseNumberAndUnit(s);
         while (next.found)
         {
             import std.algorithm;
+
             auto scale = scales.find!(i => i.name == next.name);
             if (scale.empty)
             {
                 throw new Exception("unknown unit " ~ next.name);
             }
             import std.conv;
+
             res += std.conv.to!(long)(next.value) * scale.front.factor;
             next = parseNumberAndUnit(next.rest);
         }

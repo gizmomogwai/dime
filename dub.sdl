@@ -6,14 +6,18 @@ license "MIT"
 
 x:ddoxFilterArgs "--min-protection=Private"
 
-dependency "colored" version="~>0.0.12"
+preGenerateCommands "env && dub run packageversion"
+sourcePaths "source" "out/generated/packageversion"
+importPaths "source" "out/generated/packageversion"
 
-dependency "asciitable" version="~>0.0.3"
+dependency "packageversion" version="~>0.0.18"
+
+dependency "colored" version="~>0.0.12"
 
 configuration "library" {
   targetType "library"
   targetPath "out/lib"
-
+  
   excludedSourceFiles "source/app.d"
 }
 
@@ -22,13 +26,7 @@ configuration "application" {
   targetPath "out/main"
 
   mainSourceFile "source/app.d"
-
-  dependency "packageversion" version="~>0.0.15"
-  subConfiguration "packageversion" "library"
-
-  preGenerateCommands "packageversion || dub run packageversion"
-  sourcePaths "source" "out/generated/packageversion"
-  importPaths "source" "out/generated/packageversion"
+  dependency "asciitable" version="~>0.0.3"
 }
 
 configuration "unittest" {
