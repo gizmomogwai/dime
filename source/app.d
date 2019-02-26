@@ -22,10 +22,12 @@ int main(string[] args)
 
         // dfmt off
         auto table = packageversion
-            .getPackages.sort!("a.name < b. name")
-            .fold!((table, p) => table.add(p.name, p.semVer, p.license))(AsciiTable(0, 0, 0));
+            .getPackages
+            .sort!("a.name < b.name")
+            .fold!((table, p) => table.row.add(p.name.white).add(p.semVer.lightGray).add(p.license.lightGray).table)
+            (new AsciiTable(3).header.add("Package".bold).add("Version".bold).add("License".bold).table);
         // dfmt on
-        writeln("Packages:\n", table.toString("   ", " "));
+        stderr.writeln("Packageinfo:\n", table.format.prefix("  | ").headerSeparator(true).columnSeparator(true).to!string);
         return 0;
     }
 
