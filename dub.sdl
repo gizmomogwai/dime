@@ -1,7 +1,7 @@
 name "dime"
 description "A simple time implementation in dlang."
-authors "Christian Köstlin"
-copyright "Copyright © 2017, Christian Köstlin"
+authors "Christian Koestlin"
+copyright "Copyright (c) 2017, Christian Koestlin"
 license "MIT"
 
 x:ddoxFilterArgs "--min-protection=Private"
