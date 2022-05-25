@@ -10,15 +10,8 @@ preGenerateCommands "packageversion || dub run packageversion"
 sourcePaths "source" "out/generated/packageversion"
 importPaths "source" "out/generated/packageversion"
 
-dependency "packageversion" version="~>0.0.18"
+dependency "packageversion" version="~>0.0.19"
 dependency "colored" version="~>0.0.19"
-
-configuration "library" {
-  targetType "library"
-  targetPath "out/lib"
-  
-  excludedSourceFiles "source/app.d"
-}
 
 configuration "application" {
   targetType "executable"
@@ -28,12 +21,19 @@ configuration "application" {
   dependency "asciitable" version="~>0.0.8"
 }
 
+configuration "library" {
+  targetType "library"
+  targetPath "out/lib"
+
+  excludedSourceFiles "source/app.d"
+}
+
 configuration "unittest" {
   targetType "executable"
   targetName "unittest"
   targetPath "out/test"
 
-  dependency "unit-threaded" version="~>0.8.0"
+  dependency "unit-threaded" version="~>2.0.3"
   preBuildCommands "dub run unit-threaded -c gen_ut_main -- -f out/generated/unit-threaded/testsuite.d"
   mainSourceFile "out/generated/unit-threaded/testsuite.d"
   excludedSourceFiles "source/app.d"
@@ -45,7 +45,7 @@ configuration "ut" {
   targetPath "out/test"
 
   versions "unitThreadedLight"
-  dependency "unit-threaded" version="~>0.8.0"
+  dependency "unit-threaded" version="~>2.0.3"
   preBuildCommands "dub run unit-threaded -c gen_ut_main -- -f out/generated/unit-threaded/testsuite.d"
   mainSourceFile "out/generated/unit-threaded/testsuite.d"
   excludedSourceFiles "source/app.d"
