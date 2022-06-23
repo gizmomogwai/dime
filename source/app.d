@@ -16,12 +16,12 @@ int main(string[] args)
     if (help.helpWanted)
     {
         defaultGetoptPrinter("D(t)ime your programs.", help.options);
-        import packageversion;
+        import packageinfo;
         import std.algorithm : sort;
         import asciitable;
 
         // dfmt off
-        auto table = packageversion
+        auto table = packageinfo
             .getPackages
             .sort!("a.name < b.name")
             .fold!((table, p) => table.row.add(p.name.white).add(p.semVer.lightGray).add(p.license.lightGray).table)
