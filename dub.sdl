@@ -6,7 +6,7 @@ license "MIT"
 
 x:ddoxFilterArgs "--min-protection=Private"
 
-dependency "colored" version="~>0.0.26"
+dependency "colored" version="~>0.0.27"
 
 configuration "application" {
   preGenerateCommands "dub run packageinfo"
@@ -17,14 +17,14 @@ configuration "application" {
   targetPath "out/main"
 
   mainSourceFile "source/app.d"
-  dependency "asciitable" version="~>0.0.9"
+  dependency "asciitable" version="~>0.0.14"
 }
 
 configuration "library" {
   targetType "library"
   targetPath "out/lib"
 
-  excludedSourceFiles "source/app.d"
+  excludedSourceFiles "source/app.d" "source/testsuite.d"
 }
 
 configuration "unittest" {
@@ -33,8 +33,7 @@ configuration "unittest" {
   targetPath "out/test"
 
   dependency "unit-threaded" version="~>2.0.4"
-  preBuildCommands "dub run unit-threaded -c gen_ut_main -- -f out/generated/unit-threaded/testsuite.d"
-  mainSourceFile "out/generated/unit-threaded/testsuite.d"
+  mainSourceFile "source/testsuite.d"
   excludedSourceFiles "source/app.d"
 }
 
@@ -45,7 +44,6 @@ configuration "ut" {
 
   versions "unitThreadedLight"
   dependency "unit-threaded" version="~>2.0.4"
-  preBuildCommands "dub run unit-threaded -c gen_ut_main -- -f out/generated/unit-threaded/testsuite.d"
-  mainSourceFile "out/generated/unit-threaded/testsuite.d"
+  mainSourceFile "source/testsuite.d"
   excludedSourceFiles "source/app.d"
 }

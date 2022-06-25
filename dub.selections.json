@@ -1,9 +1,9 @@
 {
 	"fileVersion": 1,
 	"versions": {
-		"asciitable": "0.0.13",
+		"asciitable": "0.0.14",
 		"color": "0.0.9",
-		"colored": "0.0.26",
+		"colored": "0.0.27",
 		"packageversion": "0.0.19",
 		"unit-threaded": "2.0.4"
 	}
