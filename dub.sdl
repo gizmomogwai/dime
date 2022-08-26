@@ -6,7 +6,7 @@ license "MIT"
 
 x:ddoxFilterArgs "--min-protection=Private"
 
-dependency "colored" version="~>0.0.27"
+dependency "colored" version="~>0.0.28"
 
 configuration "application" {
   preGenerateCommands "dub run packageinfo"
@@ -17,7 +17,7 @@ configuration "application" {
   targetPath "out/main"
 
   mainSourceFile "source/app.d"
-  dependency "asciitable" version="~>0.0.14"
+  dependency "asciitable" version="~>0.0.16"
 }
 
 configuration "library" {
@@ -32,18 +32,8 @@ configuration "unittest" {
   targetName "unittest"
   targetPath "out/test"
 
-  dependency "unit-threaded" version="~>2.0.4"
+  dependency "unit-threaded" version="~>2.1.1"
   mainSourceFile "source/testsuite.d"
   excludedSourceFiles "source/app.d"
-}
-
-configuration "ut" {
-  targetType "executable"
-  targetName "ut"
-  targetPath "out/test"
-
-  versions "unitThreadedLight"
-  dependency "unit-threaded" version="~>2.0.4"
-  mainSourceFile "source/testsuite.d"
-  excludedSourceFiles "source/app.d"
+  postRunCommands "$DUB run lst2errormessages || true"
 }
