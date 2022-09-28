@@ -3,6 +3,18 @@
  +/
 module unit;
 
+import std.algorithm : cumulativeFold, find, min, map;
+import std.array : array, appender, join;
+import std.ascii : isAlpha, isDigit;
+import std.conv : to;
+import std.exception : enforce;
+import std.range : empty, front, popFront, retro;
+import std.typecons : tuple;
+
+version (unittest) {
+    import unit_threaded;
+}
+
 /++
  + A unit allows to easily print mixed resolution values.
  + Typical examples include time (with hours, minutes, ...)
@@ -14,9 +26,6 @@ module unit;
  +/
 public struct Unit
 {
-    import std.algorithm.iteration;
-    import std.range;
-
     /++
      + A scale is one resolution of a unit.
      +/
@@ -56,11 +65,10 @@ public struct Unit
         /// number of digits
         int digits;
         /// convenient tostring function. e.g. 10min
-        auto toString()
+        void toString(Sink, Format)(Sink sink, Format format) const
         {
-            import std.conv;
-
-            return value.to!(string) ~ name;
+            sink(value.to!string);
+            sink(name);
         }
     }
 
@@ -71,8 +79,6 @@ public struct Unit
 
     public this(string name, Scale[] scales)
     {
-        import std.exception;
-
         this.name = name;
         this.scales = cumulativeFold!((result, x) => scale(x.name,
                 result.factor * x.factor, x.digits))(scales).array.retro.array;
@@ -84,8 +90,6 @@ public struct Unit
      +/
     public auto transform(long v) immutable
     {
-        import std.array;
-
         auto res = appender!(Part[]);
         auto tmp = v;
         foreach (Scale scale; scales)
@@ -99,8 +103,6 @@ public struct Unit
 
     private static auto parseNumberAndUnit(string s)
     {
-        import std.ascii;
-
         string value;
         while (!s.empty)
         {
@@ -141,8 +143,6 @@ public struct Unit
         }
 
         auto rest = s;
-        import std.typecons;
-
         if ((name.length > 0) && (value.length > 0))
         {
             return tuple!("found", "name", "value", "rest")(true, name, value, rest);
@@ -155,22 +155,16 @@ public struct Unit
 
     long parse(string s) immutable
     {
-        import std.ascii;
-
         long res = 0;
         auto next = parseNumberAndUnit(s);
         while (next.found)
         {
-            import std.algorithm;
-
             auto scale = scales.find!(i => i.name == next.name);
             if (scale.empty)
             {
                 throw new Exception("unknown unit " ~ next.name);
             }
-            import std.conv;
-
-            res += std.conv.to!(long)(next.value) * scale.front.factor;
+            res += next.value.to!long * scale.front.factor;
             next = parseNumberAndUnit(next.rest);
         }
         return res;
@@ -179,17 +173,14 @@ public struct Unit
 
 @("parse") unittest
 {
-    import unit_threaded;
-
-    TIME.parse("1s 2ms").shouldEqual(1002);
-    TIME.parse("1s2ms").shouldEqual(1002);
+    TIME.parse("1s 2ms").should == 1002;
+    TIME.parse(" 1s 2ms").should == 1002;
+    TIME.parse("1s2ms").should == 1002;
     TIME.parse("1blub2ms").shouldThrow;
 }
 
 @("creatingScales") unittest
 {
-    import unit_threaded;
-
     auto s = Unit.scale("ttt", 1, 2);
     s.digits.shouldEqual(2);
 
@@ -204,8 +195,6 @@ public struct Unit
  +/
 auto onlyRelevant(Unit.Part[] parts)
 {
-    import std.array;
-
     auto res = appender!(Unit.Part[]);
     bool needed = false;
     foreach (part; parts)
@@ -227,10 +216,7 @@ auto onlyRelevant(Unit.Part[] parts)
  +/
 auto mostSignificant(Unit.Part[] parts, long nr)
 {
-    import std.algorithm.comparison;
-
-    auto max = min(parts.length, nr);
-    return parts[0 .. max];
+    return parts[0 .. min(parts.length, nr)];
 }
 
 /++
@@ -238,33 +224,33 @@ auto mostSignificant(Unit.Part[] parts, long nr)
  +/
 @("basicUsage") unittest
 {
-    import unit_threaded;
-
     auto res = TIME.transform(1 + 2 * 1000 + 3 * 1000 * 60 + 4 * 1000 * 60 * 60
             + 5 * 1000 * 60 * 60 * 24);
-    res.length.shouldEqual(5);
-    res[0].name.shouldEqual("d");
-    res[0].value.shouldEqual(5);
-    res[1].name.shouldEqual("h");
-    res[1].value.shouldEqual(4);
-    res[2].name.shouldEqual("m");
-    res[2].value.shouldEqual(3);
-    res[3].name.shouldEqual("s");
-    res[3].value.shouldEqual(2);
-    res[4].name.shouldEqual("ms");
-    res[4].value.shouldEqual(1);
+    res.length.should == 5;
+    res[0].name.should == "d";
+    res[0].value.should == 5;
+    res[1].name.should == "h";
+    res[1].value.should == 4;
+    res[2].name.should == "m";
+    res[2].value.should == 3;
+    res[3].name.should == "s";
+    res[3].value.should == 2;
+    res[4].name.should == "ms";
+    res[4].value.should == 1;
+
+    res.map!("a.to!string").array.join(" ").should == "5d 4h 3m 2s 1ms";
 
     res = TIME.transform(2001).onlyRelevant;
-    res.length.shouldEqual(2);
-    res[0].name.shouldEqual("s");
-    res[0].value.shouldEqual(2);
-    res[1].name.shouldEqual("ms");
-    res[1].value.shouldEqual(1);
+    res.length.should == 2;
+    res[0].name.should == "s";
+    res[0].value.should == 2;
+    res[1].name.should == "ms";
+    res[1].value.should == 1;
 
     res = TIME.transform(2001).onlyRelevant.mostSignificant(1);
-    res.length.shouldEqual(1);
-    res[0].name.shouldEqual("s");
-    res[0].value.shouldEqual(2);
+    res.length.should == 1;
+    res[0].name.should == "s";
+    res[0].value.should == 2;
 }
 
 // dfmt off
