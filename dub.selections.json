@@ -3,7 +3,7 @@
 	"versions": {
 		"asciitable": "0.0.16",
 		"color": "0.0.9",
-		"colored": "0.0.29",
-		"unit-threaded": "2.1.2"
+		"colored": "0.0.31+commit.1.g6316447",
+		"unit-threaded": "2.1.7"
 	}
 }

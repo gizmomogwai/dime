@@ -11,7 +11,8 @@ import std.exception : enforce;
 import std.range : empty, front, popFront, retro;
 import std.typecons : tuple;
 
-version (unittest) {
+version (unittest)
+{
     import unit_threaded;
 }
 
