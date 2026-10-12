@@ -8,3 +8,4 @@ __test__*__
 out/lib
 out/main
 docs
+*#*
