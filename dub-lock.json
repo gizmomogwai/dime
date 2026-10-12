@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "asciitable": {
+      "version": "0.0.17",
+      "sha256": "1kpbsnbq7kf9piyjzkm3ynsnzbhxfsr4kkii0f342n3w4xay8mwg"
+    },
+    "colored": {
+      "version": "0.0.34",
+      "sha256": "16frki7dcs1dhxv2dwkc36nbpb5xhqwzkjycjjhflfv7xsbg3dg3"
+    },
+    "unit-threaded": {
+      "version": "2.2.6",
+      "sha256": "1xdrhhqfbzr7ksxxf561a355vshcw0ih9qr2509naixxl28p67r4"
+    }
+  }
+}

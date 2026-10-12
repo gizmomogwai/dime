@@ -2,9 +2,9 @@
 docs.json
 __dummy.html
 __test__*__
-gen
 *.lst
 *.log
 *~
-out
+out/lib
+out/main
 docs
